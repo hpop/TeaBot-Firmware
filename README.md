@@ -22,6 +22,6 @@ TeaBot is released under the [Creative Commons - Attribution](https://creativeco
 TeaBot is a collaborative effort, and we would like to thank the following individuals for their contributions:
 
 - SnakeP: Original creator of the awesome TeaBot project.
-- [Your Name]: Add your name here if you have contributed to this fork.
+- Carlo Stramaglia: His videos helped SnakeP to develop the original firmware.
 
 Please feel free to contribute to this project by submitting pull requests or reporting issues.
