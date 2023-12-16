@@ -16,7 +16,7 @@
  * 
  *  ********************************************************
  *  Single click - set time in minutes
- *  Idle for 2 seconds - start tea making
+ *  Idle for 1.5 seconds - start tea making
  *  Long click - reset / stop tea making
  */
 
@@ -35,7 +35,8 @@
 // ====== options =======
 
 // idle time until the tea making starts
-unsigned int IDLE_TIME = 2000;
+// default 1500 (1.5 seconds)
+unsigned int IDLE_TIME = 1500;
 
 //Delay between servo steps 
 //(the higher the value, the slower the servo moves)

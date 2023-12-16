@@ -10,7 +10,7 @@ This fork of TeaBot includes the following improvements:
 
 - Better UI: The user interface has been enhanced to provide a more intuitive and user-friendly experience.
 - Interruptible Tea Making: The tea making process can now be interrupted by performing a long press on the button.
-- Automatic Start: The TeaBot will automatically start the tea making process after a 2-second delay, eliminating the need for double-tapping the button.
+- Automatic Start: The TeaBot will automatically start the tea making process after a 1.5-second delay, eliminating the need for double-tapping the button.
 - Regular Dipping: The TeaBot will dip the tea bag every 2 minutes to ensure proper infusion.
 
 ## License
