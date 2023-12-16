@@ -16,7 +16,7 @@
  * 
  *  ********************************************************
  *  Single click - set time in minutes
- *  Idle for 3 seconds - start tea making
+ *  Idle for 2 seconds - start tea making
  *  Long click - reset / stop tea making
  */
 
@@ -33,6 +33,9 @@
 #define PIN_SERVO 9
 
 // ====== options =======
+
+// idle time until the tea making starts
+unsigned int IDLE_TIME = 2000;
 
 //Delay between servo steps 
 //(the higher the value, the slower the servo moves)
@@ -97,6 +100,20 @@ void displayTime(unsigned int minutes, unsigned int seconds) {
 void showEmptyState() {
   uint8_t emptyState[4] = { 0x40, 0xc0, 0x40, 0x40 };
   display.setSegments(emptyState);
+}
+
+void showAnimation(const uint8_t (*frames)[4], int numFrames, unsigned int delaytime) {
+  for (int i = 0; i < numFrames; i++) {
+    display.setSegments(frames[i]);
+    delay(delaytime);
+  }
+}
+
+void blinkTeaMinutes() {
+  display.clear();
+  delay(200);
+  displayTime(teaMinutes, 0);
+  delay(100);
 }
 
 
@@ -226,12 +243,18 @@ boolean shouldDip() {
     && currentMinute != teaMinutes;
 }
 
-void showAnimation(const uint8_t (*frames)[4], int numFrames, unsigned int delaytime) {
-  for (int i = 0; i < numFrames; i++) {
-    display.setSegments(frames[i]);
-    delay(delaytime);
-  }
+boolean shoudBlink() {
+  return !timerRunning 
+    && lastButtonPressedTime != 0 
+    && millis() - lastButtonPressedTime > IDLE_TIME - 400;
 }
+
+boolean shouldStartTeaMaking() {
+  return !timerRunning 
+    && lastButtonPressedTime != 0 
+    && millis() - lastButtonPressedTime > IDLE_TIME;
+}
+
 
 // Animation on startup
 void fancyStartupDisplayAnimation() {
@@ -275,8 +298,12 @@ void setup() {
 void loop() {
   button.tick();
 
+  if (shoudBlink()) {
+    blinkTeaMinutes();
+  }
+
   // start the tea making after 3 second idle
-  if (lastButtonPressedTime != 0 && millis() - lastButtonPressedTime > 3000) {
+  if (shouldStartTeaMaking()) {
     
     char buffer[50];
     sprintf(buffer, "Start tea making after %lu seconds idle", (millis() - lastButtonPressedTime) / 1000);
